@@ -74,9 +74,6 @@ def pars_inp():
 			
     (opts, args) = optparser.parse_args()
 
-    #if len(args) < 2 and opts.In_str =='':
-    #    print optparser.format_help() #prints help if no arguments
-    #    sys.exit(1)
     return opts	
 
 def init_dist_matrix(max_d = GOOD_NEIGH + 1):
@@ -242,7 +239,7 @@ def initialize_random(n, m, fa, bound = BOUND):
         #indices = [k for k, x in enumerate(b) if x == 1] # indexes of b list with 1 values
         indices =  numpy.where(regular_bsites[i] == 1) # regular_bsites - 3D array with layer nr = nr of binding_sites_types, rows - atom_number, columns - chromosomes
         if len(indices[0]) > 1: 
-            print ("Warning!!! The  %i atom is assign to the different binders. " %(i+1))
+            #print ("Warning!!! The  %i atom is assign to the different binders. " %(i+1))
             ke = tuple([ BSITE_R[index] for index in indices[0]]) # key of the reverse dictionary, to find number for state item for  the atom that can bind more than one binders
             val = BSITE_dic_re[ke]
             #print indices, indices[0], ke, val
@@ -415,12 +412,6 @@ def write_as_pdb(chain, binders, attached_to_lamins, state, f, nb, metr_step, na
                 r = "S"+str(state[tuple(cur_chain)])
         else: 
             r = "LAM" #BSITE_L
-        #else: # BSITE_L
-        #    #print type(tuple(cur_chain)), type(attached_to_lamins), tuple(cur_chain), attached_to_lamins
-        #    if tuple(cur_chain) in attached_to_lamins:
-        #        r = "LAS"
-        #    else:
-        #        r = "NLA"
         at_nr += 1
         f.write(pdb_line(at_n, at_nr, r, chain[i]))
 
@@ -438,11 +429,6 @@ def write_as_pdb(chain, binders, attached_to_lamins, state, f, nb, metr_step, na
         at_n = 'O'
         f.write(pdb_line(at_n, at_nr, r, ap_binder))
 
-    #for hl in highlighted_lamins:
-    #    at_nr += 1
-    #    r = "HLA" 
-    #    at_n = 'P'
-    #    f.write(pdb_line(at_n, at_nr, r, hl))
 
     for i in range(1, chain_at - 1):
         if i == 1:
@@ -694,7 +680,7 @@ if rand_init:
     
     BSITE_BINDER = dict(zip(BSITE_R, BINDER_pre))
             
-    print (BSITE_R, BINDER, BSITE_dic, BSITE_dic_re, BINDER_pre, BSITE_BINDER)
+#    print (BSITE_R, BINDER, BSITE_dic, BSITE_dic_re, BINDER_pre, BSITE_BINDER)
     
     c, b, a, state = initialize_random(N, M, fn)
 else:
